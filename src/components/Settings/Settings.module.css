@@ -1,0 +1,16 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+
+}
+
+.span {
+    width: 180px;
+
+}
+
+.input {
+    width: 70px;
+    height: 17px;
+}

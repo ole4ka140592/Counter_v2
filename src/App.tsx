@@ -1,26 +1,55 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
-import './App.css';
+import classes from './App.module.css'
+import {Counter} from "./components/Counter/Counter";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    let startValue = 0
+    let maxValue = 5
+
+    let [number, setNumber] = useState(0)
+    let [disabledInc, setDisabledInc] = useState(false)
+    let [disabledReset, setDisabledReset] = useState(true)
+
+    const callBackHandlerIncrement = () => {
+        if (number < maxValue) {
+            setNumber(number + 1)
+            setDisabledReset(false)
+        } else if (number === maxValue) {
+            setDisabledInc(true)
+        }
+    }
+
+    const callBackHandlerReset = () => {
+        if (number === maxValue) {
+            setNumber(startValue)
+            setDisabledReset(true)
+            setDisabledInc(false)
+        } else if (number === startValue) {
+            setDisabledReset(true)
+            setDisabledInc(false)
+        } else {
+            setNumber(number - 1)
+        }
+    }
+
+
+    return (
+        <div className={classes.information}>
+            <Counter
+                number={number}
+                callBackHandlerIncrement={callBackHandlerIncrement}
+                callBackHandlerReset={callBackHandlerReset}
+                startValue={startValue}
+                maxValue={maxValue}
+
+                // disabledInc={disabledInc}
+                // disabledReset={disabledReset}
+            />
+        </div>
+    )
 }
 
 export default App;
