@@ -5,12 +5,12 @@ export const Settings = () => {
     return (
         <div className={classes.settings}>
             <div className={classes.pair}>
-                <span className={classes.span}>max value:</span>
-                <input type="number" className={classes.input}/>
+                <div className={classes.span}><span >max value:</span></div>
+                <div><input type="number" className={classes.input}/></div>
             </div>
             <div className={classes.pair}>
-                <span className={classes.span}>start value:</span>
-                <input type="number" className={classes.input}/>
+                <div className={classes.span}><span>start value:</span></div>
+                <div><input type="number" className={classes.input}/></div>
             </div>
         </div>
     )
