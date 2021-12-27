@@ -6,12 +6,13 @@ import {Counter} from "./components/Counter/Counter";
 
 function App() {
 
-    let startValue = 0
-    let maxValue = 5
+    let [startValue, setStartValue] = useState<number>(0)
+    let [maxValue, setMaxValue] = useState<number>(5)
 
     let [number, setNumber] = useState(0)
     let [disabledInc, setDisabledInc] = useState(false)
     let [disabledReset, setDisabledReset] = useState(true)
+    let [disabledSet, setDisabledSet] = useState(false)
 
     const callBackHandlerIncrement = () => {
         if (number < maxValue) {
@@ -35,6 +36,16 @@ function App() {
         }
     }
 
+    // const callBackDisabledSetButton = ()=> {
+    //     if (startValue === maxValue) {
+    //         setDisabledSet(true)
+    //     } else if (startValue < 0) {
+    //         setDisabledSet(true)
+    //     } else {
+    //         setDisabledSet(false)
+    //     }
+    // }
+
 
     return (
         <div className={classes.information}>
@@ -42,6 +53,7 @@ function App() {
                 number={number}
                 callBackHandlerIncrement={callBackHandlerIncrement}
                 callBackHandlerReset={callBackHandlerReset}
+
                 startValue={startValue}
                 maxValue={maxValue}
 
