@@ -17,36 +17,56 @@ type SettingsONNPropsType = {
 }
 
 export const SettingsONN = (props: SettingsONNPropsType) => {
+    let [error, setError] = useState(false)
 
     // const disabledSetButton = () => {
-    //     if (props.startValue) {
-    //         if (props.startValue < 0) {
-    //             props.setDisabledSet(true)
-    //         } else if (props.startValue === props.maxValue) {
-    //             props.setDisabledSet(true)
-    //         }
+    //     debugger
+    //
+    //     if (newStartValue < 0 || props.startValue > props.maxValue) {
+    //
+    //         setError(true)
+    //     } else if (props.startValue === props.maxValue) {
+    //
+    //         setError(true)
     //     }
+    //
     // }
 
     const onChangeSTART_value = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setStartValue(JSON.parse(e.currentTarget.value))
+        let newStartValue = JSON.parse(e.currentTarget.value)
+        props.setStartValue(newStartValue)
 
+        if (newStartValue < 0 || newStartValue > props.maxValue) {
+            setError(true)
+        } else if (newStartValue === props.maxValue) {
+            setError(true)
+        } else {
+            setError(false)
+        }
     }
 
     const onChangeMAX_value = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setMaxValue(JSON.parse(e.currentTarget.value))
+        let newMaxValue = JSON.parse(e.currentTarget.value)
+        props.setMaxValue(newMaxValue)
+        if (props.startValue < 0 || props.startValue > newMaxValue) {
+            setError(true)
+        } else if (props.startValue === newMaxValue) {
+            setError(true)
+        } else {
+            setError(false)
+        }
+
     }
 
-    let [error, setError] = useState(false)
 
     const settingsONN_Handler = () => {
 
         if (props.startValue < 0 && props.startValue > props.maxValue) {
             props.setDisabledSet(true)
-            setError(true)
+
         } else if (props.startValue === props.maxValue) {
             props.setDisabledSet(true)
-            setError(true)
+
         }
 
         localStorage.setItem("startValue", JSON.stringify(props.startValue))
@@ -61,7 +81,6 @@ export const SettingsONN = (props: SettingsONNPropsType) => {
     }
 
 
-
     return (
         <div className={classes.count}>
             <div className={classes.number}>
@@ -70,7 +89,7 @@ export const SettingsONN = (props: SettingsONNPropsType) => {
                         <div className={classes.span}><span>max value:</span></div>
                         <div><input
                             type="number"
-                            className={classes.input}
+                            className={error ? classes.errorInput : classes.input}
                             value={props.maxValue}
                             onChange={onChangeMAX_value}
 
@@ -81,7 +100,7 @@ export const SettingsONN = (props: SettingsONNPropsType) => {
                         <div className={classes.span}><span>start value:</span></div>
                         <div><input
                             type="number"
-                            className={classes.input}
+                            className={error ? classes.errorInput : classes.input}
                             value={props.startValue}
                             onChange={onChangeSTART_value}
                         /></div>
@@ -91,7 +110,6 @@ export const SettingsONN = (props: SettingsONNPropsType) => {
             <div className={classes.buttons}>
                 <Button name='set'
                         callBack={settingsONN_Handler}
-
                         disabledButton={props.disabledButton}
                         disabled={
                             props.startValue === props.maxValue
