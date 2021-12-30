@@ -8,7 +8,14 @@ function App() {
 
     let [number, setNumber] = useState<number | null>(null)
 
+    useEffect(() => {
+        let newStartNumberString = (localStorage.getItem("startValue"))
+        if (newStartNumberString) {
+            let newStartNumber = JSON.parse(newStartNumberString)
+            setNumber(newStartNumber)
 
+        }
+    }, [])
 
 
     return (

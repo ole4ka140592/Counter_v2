@@ -19,23 +19,19 @@ type SettingsONNPropsType = {
 export const SettingsONN = (props: SettingsONNPropsType) => {
     let [error, setError] = useState(false)
 
-    // const disabledSetButton = () => {
-    //     debugger
-    //
-    //     if (newStartValue < 0 || props.startValue > props.maxValue) {
-    //
-    //         setError(true)
-    //     } else if (props.startValue === props.maxValue) {
-    //
-    //         setError(true)
-    //     }
-    //
-    // }
+    useEffect(() => {
+        localStorage.setItem("startValue", JSON.stringify(props.startValue))
+
+    }, [props.startValue])
+
+    useEffect(() => {
+
+        localStorage.setItem("maxValue", JSON.stringify(props.maxValue))
+    }, [props.maxValue])
 
     const onChangeSTART_value = (e: ChangeEvent<HTMLInputElement>) => {
         let newStartValue = JSON.parse(e.currentTarget.value)
         props.setStartValue(newStartValue)
-
         if (newStartValue < 0 || newStartValue > props.maxValue) {
             setError(true)
         } else if (newStartValue === props.maxValue) {
@@ -55,27 +51,16 @@ export const SettingsONN = (props: SettingsONNPropsType) => {
         } else {
             setError(false)
         }
-
     }
 
 
     const settingsONN_Handler = () => {
-
-        if (props.startValue < 0 && props.startValue > props.maxValue) {
-            props.setDisabledSet(true)
-
-        } else if (props.startValue === props.maxValue) {
-            props.setDisabledSet(true)
-
-        }
-
-        localStorage.setItem("startValue", JSON.stringify(props.startValue))
         localStorage.setItem("maxValue", JSON.stringify(props.maxValue))
-        let newNumberString = (localStorage.getItem("startValue"))
-        if (newNumberString) {
-            let newNumber = JSON.parse(newNumberString)
-            props.setNumber(newNumber)
-            props.setStartValue(newNumber)
+        localStorage.setItem("startValue", JSON.stringify(props.startValue))
+        let newStartNumberString = (localStorage.getItem("startValue"))
+        if (newStartNumberString) {
+            let newStartNumber = JSON.parse(newStartNumberString)
+            props.setNumber(newStartNumber)
         }
         props.setSettings(!props.settings)
     }
